@@ -1,5 +1,7 @@
 FROM node:12.8.0-slim
 
+RUN apt update
+
 # Install Chrome deps
 RUN apt-get update && apt-get install -y -q --no-install-recommends \
         libgtk-3-dev \
@@ -24,7 +26,7 @@ RUN apt-get install -y -q --no-install-recommends python
 
 # Install pip
 RUN set -x \
- && curl -OL https://bootstrap.pypa.io/2.7/get-pip.py \
+ && curl -OL https://bootstrap.pypa.io/pip/2.7/get-pip.py \
  && python get-pip.py \
  && rm get-pip.py
 
@@ -46,3 +48,9 @@ RUN apt-get install -y -q --no-install-recommends default-jdk
 RUN apt-get -y install git
 
 RUN apt-get -y install procps
+
+# DD agent
+RUN DD_AGENT_MAJOR_VERSION=7 \
+DD_SITE=$(aws ssm get-parameter --region us-east-1 --name ci.browser-sdk.dd_site --with-decryption --query "Parameter.Value" --out text) \
+DD_API_KEY=$(aws ssm get-parameter --region us-east-1 --name ci.browser-sdk.dd_api_key --with-decryption --query "Parameter.Value" --out text) \
+bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
