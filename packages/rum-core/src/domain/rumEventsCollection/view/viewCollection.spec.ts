@@ -1,4 +1,4 @@
-import { Duration, RelativeTime, ServerDuration } from '@datadog/browser-core'
+import { Duration, RelativeTime, ServerDuration, isIE } from '@datadog/browser-core'
 import { setup, TestSetupBuilder } from '../../../../test/specHelper'
 import { RumEventType, ViewLoadingType } from '../../../rawRumEvent.types'
 import { LifeCycleEventType } from '../../lifeCycle'
@@ -58,6 +58,10 @@ describe('viewCollection', () => {
       },
     }
     lifeCycle.notify(LifeCycleEventType.VIEW_UPDATED, view)
+
+    if (isIE()) {
+      expect(false).toBe(true)
+    }
 
     expect(rawRumEvents[rawRumEvents.length - 1].startTime).toBe(1234)
     expect(rawRumEvents[rawRumEvents.length - 1].rawRumEvent).toEqual({
