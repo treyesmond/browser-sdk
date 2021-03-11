@@ -74,9 +74,11 @@ unit:
     reports:
       junit: test-report/unit/*.xml
   script:
+    - service datadog-agent start
     - yarn
     - yarn test:unit
     - ./scripts/codecov.sh
+    - sleep 10 && service datadog-agent stop
 
 e2e:
   stage: test
@@ -112,8 +114,10 @@ unit-bs:
     reports:
       junit: test-report/unit-bs/*.xml
   script:
+    - service datadog-agent start
     - yarn
     - ./scripts/ci-bs.sh test:unit
+    - sleep 10 && service datadog-agent stop
 
 e2e-bs:
   except:
