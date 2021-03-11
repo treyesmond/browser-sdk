@@ -59,6 +59,7 @@
     "eslint-plugin-prefer-arrow": "1.2.3",
     "eslint-plugin-unicorn": "28.0.0",
     "express": "4.17.1",
+    "hot-shots": "8.3.0",
     "istanbul-instrumenter-loader": "3.0.1",
     "jasmine-core": "3.6.0",
     "js-polyfills": "0.1.43",
