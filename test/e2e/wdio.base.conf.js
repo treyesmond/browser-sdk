@@ -1,8 +1,9 @@
 const path = require('path')
 const { unlinkSync, mkdirSync } = require('fs')
 const getTestReportDirectory = require('../getTestReportDirectory')
+const MetricsPlugin = require('./metricsPlugin')
 
-const reporters = ['spec']
+const reporters = ['spec', [MetricsPlugin, {}]]
 let logsPath
 
 const testReportDirectory = getTestReportDirectory()
